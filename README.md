@@ -20,8 +20,17 @@ CFG files must be exported from HW Config tool in human-readable format as shown
 Typical usage parser:
 ```sh
 # using default cp1251 encoding for cfg file and json output serializer
-./parser_cli.py --if as.cfg --of as.json
+./app.py --if as.cfg --of as.json
+# or simple
+./app.py -i as.cfg -o as.json
 
-# using custom cfg file encoding and custom serializer
-./parser_cli.py --encoding utf-8 --serializer xml --if as.cfg --of as.json 
+# using specified serializer with options "json pretty print"
+./app.py --format json --json-pretty --if as.cfg --of as.json
+# or simple
+./app.py -f json -p -i as.cfg -o as.json
+
+# using custom cfg file encoding
+./app.py --encoding utf-8 --if as.cfg --of as.json
+# or simple
+./app.py -e cp1251 -i as.cfg -o as.json
 ```

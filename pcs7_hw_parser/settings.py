@@ -9,6 +9,7 @@ PARSERS_AVAILABLE = (
     'rack_module_parser.RackModuleParser'
 )
 
+# First serializer are default
 SERIALIZERS_AVAILABLE = (
     'json_serializer.JSONSerializer',
 )
