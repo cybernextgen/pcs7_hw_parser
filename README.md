@@ -2,7 +2,7 @@
 
 ## Features
 This parser allows you to export hardware configuration of your PCS7/STEP7 AS station to pretty json, or xml or custom format using 
-plug-in formatters. 
+plug-in serializers.
 
 ![Example of output json file](/images/json_example.png)
 
@@ -17,14 +17,14 @@ CFG files must be exported from HW Config tool in human-readable format as shown
 
 ![AS station export dialog](/images/export_dialog.png)
 
-Typical usage parser:
+Typical parser usage:
 ```sh
 # using default cp1251 encoding for cfg file and json output serializer
 ./app.py --if as.cfg --of as.json
 # or simple
 ./app.py -i as.cfg -o as.json
 
-# using specified serializer with options "json pretty print"
+# using specified serializer with option "json pretty print"
 ./app.py --format json --json-pretty --if as.cfg --of as.json
 # or simple
 ./app.py -f json -p -i as.cfg -o as.json
