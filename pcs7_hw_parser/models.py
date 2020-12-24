@@ -1,4 +1,4 @@
-import re
+import re, os
 from settings import MODULE_TYPES
 
 
@@ -80,5 +80,5 @@ class Serializer(object):
     def __init__(self, parent_args_parser):
         self.parent_args_parser = parent_args_parser
 
-    def to_serial(self, result):
+    def to_serial(self, args, data):
         raise NotImplementedError
