@@ -13,10 +13,17 @@ class Module(object):
         self.slot_num = kwargs.get('slot_num')
         self.fill_module_type()
 
+    def __eq__(self, other):
+        if isinstance(other, self.__class__):
+            return self.__dict__ == other.__dict__
+        else:
+            return False
+
     def fill_module_type(self):
         for key in MODULE_TYPES:
             if re.match(key, self.order_num, re.IGNORECASE):
                 self.module_type = MODULE_TYPES[key]
+                break
 
 
 class RackModule(Module):
