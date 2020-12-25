@@ -1,3 +1,4 @@
+import os
 """
 App settings
 """
@@ -53,4 +54,28 @@ MODULE_TYPES = {
     '6ES7 322-5SD00\s*': 'SM322 DO 4x24v Ex',
     'DIRI0948.GSD': 'DIRIS A40',
     'TELE0956.GSD': 'TELEMECANIQUE - ATV71/61'
+}
+
+# Settings for PDF serializer
+LABELS_TEMPLATE_FOLDER = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'templates')
+
+LABELS_TEMPLATE_MAP = {
+    'SM331 AI 8': '8_CH.svg',
+    'SM322 DO 8x24v': '8_CH.svg',
+    'SM331 AI 8xTC / 4xPT100': '8_CH_EX.svg',
+    'SM331 AI 4 Ex': '4_CH_EX.svg',
+    'SM321 DI 4xNAMUR': '4_CH_EX.svg',
+    'SM332 AO 4 Ex': '4_CH_EX.svg',
+    'SM332 AO 4': '4_CH.svg',
+    'SM322 DO 4x24v Ex': '4_CH_EX.svg',
+    'SM321 DI 16x24v': '16_CH_1.svg',
+    'SM322 DO 16x24v DIAG': '16_CH_2.svg',
+    'SM322 DO 16x24v': '16_CH_1.svg',
+    'SM321 DI 16xNAMUR': '16_CH_2.svg',
+    'SM331 AI 8xRTD': '8_CH_RTD.svg',
+    'SM336 F-AI 6, HART': '6_CH_F.svg',
+    'SM326 F-DI 24x24v': '24_CH_F.svg',
+    'SM326 F-DO 10x24v': '10_CH_F.svg',
+    'SM321 DI 32x24v': '32_CH.svg',
+    'SM321 DO 32x24v': '32_CH.svg',
 }

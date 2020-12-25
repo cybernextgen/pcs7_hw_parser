@@ -36,5 +36,4 @@ Typical parser usage:
 
 # using xml serializer with "xml pretty print" and attribute type declaration
 ./app --format xml --xml-pretty --xml-attr-type --if as.cfg --of as.xml
-# using
 ```
