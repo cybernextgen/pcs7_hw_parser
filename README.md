@@ -33,4 +33,8 @@ Typical parser usage:
 ./app.py --encoding utf-8 --if as.cfg --of as.json
 # or simple
 ./app.py -e cp1251 -i as.cfg -o as.json
+
+# using xml serializer with "xml pretty print" and attribute type declaration
+./app --format xml --xml-pretty --xml-attr-type --if as.cfg --of as.xml
+# using
 ```
