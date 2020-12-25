@@ -12,6 +12,7 @@ PARSERS_AVAILABLE = (
 # First serializer are default
 SERIALIZERS_AVAILABLE = (
     'json_serializer.JSONSerializer',
+    'xml_serializer.XMLSerializer'
 )
 
 # Dict for filling module type field, should be:
