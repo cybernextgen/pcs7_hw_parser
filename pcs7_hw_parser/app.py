@@ -80,6 +80,7 @@ def main():
 
     except (LookupError, UnicodeError) as e:
         logging.error('Exception while parse file, {}'.format(e))
+        raise
 
 
 if __name__ == '__main__':

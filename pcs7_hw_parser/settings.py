@@ -13,7 +13,8 @@ PARSERS_AVAILABLE = (
 # First serializer are default
 SERIALIZERS_AVAILABLE = (
     'json_serializer.JSONSerializer',
-    'xml_serializer.XMLSerializer'
+    'xml_serializer.XMLSerializer',
+    'pdf_serializer.PDFSerializer'
 )
 
 # Dict for filling module type field, should be:
@@ -57,7 +58,7 @@ MODULE_TYPES = {
 }
 
 # Settings for PDF serializer
-LABELS_TEMPLATE_FOLDER = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'templates')
+LABELS_TEMPLATE_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'templates')
 
 LABELS_TEMPLATE_MAP = {
     'SM331 AI 8': '8_CH.svg',
@@ -79,3 +80,7 @@ LABELS_TEMPLATE_MAP = {
     'SM321 DI 32x24v': '32_CH.svg',
     'SM321 DO 32x24v': '32_CH.svg',
 }
+
+LABELS_REMOVED_CHARS = (
+    'AE', 'DE', 'AI', 'DI', 'DO', 'AO', '_'
+)
