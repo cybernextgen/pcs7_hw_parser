@@ -36,4 +36,18 @@ Typical parser usage:
 
 # using xml serializer with "xml pretty print" and attribute type declaration
 ./app --format xml --xml-pretty --xml-attr-type --if as.cfg --of as.xml
+
+# using pdf serializer for printable labels generation
+./app --format pdf --if as.cfg --of as.pdf
+# more settings
+# sheet bounds offset
+./app --format pdf --pdf-x-offset 5 --pdf-y-offset 5 --if as.cfg --of as.pdf
+# Gaps between labels
+./app --format pdf --pdf-rows-margin 2 --pdf-cols-margin 2 --if as.cfg --of as.pdf
+# Zooming if neccesery
+./app --format pdf --pdf-zoom 0.95 --if as.cfg --of as.pdf
+./app --format pdf --pdf-zoom 1.05 --if as.cfg --of as.pdf
+# removing useless chars using settings.LABELS_REMOVED_CHARS tuple
+./app --format pdf --pdf-strip-names --if as.cfg --of as.pdf
+
 ```
