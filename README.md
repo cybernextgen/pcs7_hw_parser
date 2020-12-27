@@ -49,5 +49,6 @@ Typical parser usage:
 ./app --format pdf --pdf-zoom 1.05 --if as.cfg --of as.pdf
 # removing useless chars using settings.LABELS_REMOVED_CHARS tuple
 ./app --format pdf --pdf-strip-names --if as.cfg --of as.pdf
-
+# change page size and page orientation (default: A4 portrait)
+./app --format pdf --pdf-page-orientation l --pdf-page-size a3 --if as.cfg --of as.pdf
 ```

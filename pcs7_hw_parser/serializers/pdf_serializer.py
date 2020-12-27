@@ -33,6 +33,10 @@ class PDFSerializer(Serializer):
         parent_args_parser.add_argument('--pdf-rows-margin', type=int, default=0)
         parent_args_parser.add_argument('--pdf-cols-margin', type=int, default=0)
         parent_args_parser.add_argument('--pdf-strip-names', action='store_true')
+        parent_args_parser.add_argument('--pdf-page-size', dest='page_size', choices=['a3', 'a4', 'a5'], default='a4',
+                                        help="Page size")
+        parent_args_parser.add_argument('--pdf-page-orientation', dest='page_orientation', choices=['l', 'p'],
+                                        default='p', help="Page orientation (landscape/portrait)")
 
     @staticmethod
     def __ireplace(string, pattern, repl):
@@ -74,7 +78,8 @@ class PDFSerializer(Serializer):
             dd['m_p'] = m.position_name
 
             for k, value in m.channels.items():
-                dd['ch{}'.format(value['ch_number'])] = PDFSerializer.__strip_position_name(value['ch_position_name']) if args.pdf_strip_names else value['ch_position_name']
+                dd['ch{}'.format(value['ch_number'])] = PDFSerializer.__strip_position_name(
+                    value['ch_position_name']) if args.pdf_strip_names else value['ch_position_name']
 
             content = Formatter().vformat(content, (), dd)
             xml_data = etree.fromstring(content.encode())
@@ -91,10 +96,18 @@ class PDFSerializer(Serializer):
             raise
 
     def to_serial(self, args, data):
-        page_size_x = 210
-        page_size_y = 297
 
-        pdf = FPDF()
+        page_sizes_in_mm = {
+            'a3': [297, 420],
+            'a4': [210, 297],
+            'a5': [148, 210]
+        }
+
+        page_size_x, page_size_y = page_sizes_in_mm.get(args.page_size, [210, 297])
+        if args.page_orientation == 'l':
+            page_size_x, page_size_y = page_size_y, page_size_x
+
+        pdf = FPDF(orientation=args.page_orientation, format=args.page_size)
 
         current_x = args.pdf_x_offset
         current_y = args.pdf_y_offset
