@@ -1,4 +1,4 @@
-# SIMATIC PCS7/STEP7 hardware configuration parser
+# SIMATIC PCS7/STEP7 hardware configuration parser [![Build Status](https://travis-ci.com/cybernextgen/pcs7_hw_parser.svg?branch=master)](https://travis-ci.com/cybernextgen/pcs7_hw_parser)
 
 ## Features
 This parser allows you to export hardware configuration of your PCS7/STEP7 AS station to pretty json, or xml or custom format using 
@@ -10,6 +10,14 @@ Another useful feature allows you to generate printable signal modules labels. F
 svg file that contains label template.
 
 ![Example of printable labels](/images/labels_example.jpg)
+
+## Installation
+
+```sh
+$ git clone https://github.com/cybernextgen/pcs7_hw_parser.git
+$ cd pcs7_hw_parser
+$ pip install -r pcs7_hw_parser/requirements.txt
+```
 
 ## Usage
 

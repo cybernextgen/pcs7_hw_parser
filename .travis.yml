@@ -8,4 +8,5 @@ python:
 install:
   - pip install -r pcs7_hw_parser/requirements.txt
 # command to run tests
-script: python pcs7_hw_parser/tests.py
+script: coverage run pcs7_hw_parser/tests.py
+after_success: bash <(curl -s https://codecov.io/bash)
