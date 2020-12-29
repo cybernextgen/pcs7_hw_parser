@@ -4,6 +4,7 @@ import logging
 import settings
 import pydoc
 import os
+import sys
 import threading
 
 
@@ -25,7 +26,7 @@ def is_valid_file(parser, arg):
         return arg
 
 
-def main():
+def main(argv):
     parent_args_parser = argparse.ArgumentParser()
 
     parser_classes = import_plugins('parsers', settings.PARSERS_AVAILABLE)
@@ -55,7 +56,7 @@ def main():
                                     default='cp1251',
                                     help='Input SIMATIC HW CFG file encoding')
 
-    args = parent_args_parser.parse_args()
+    args = parent_args_parser.parse_args(argv)
     try:
         threads = []
         result = {}
@@ -83,5 +84,5 @@ def main():
         raise
 
 
-if __name__ == '__main__':
-    main()
+if __name__ == '__main__': # pragma: no cover
+    main(sys.argv[1:])

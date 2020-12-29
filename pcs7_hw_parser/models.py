@@ -48,17 +48,13 @@ class DPModule(Module):
         self.channels = kwargs.get('channels')
 
 
-def get_class_name(cls):
-    return cls.__name__
-
-
 class Parser(object):
     """
     Generic parser class
     """
     def __init__(self, return_type, reg_exp, result):
         self.return_type = return_type
-        self.type_name = get_class_name(self.return_type)
+        self.type_name = self.return_type.__name__
         self.reg_exp = reg_exp
         self.result = result
 

@@ -1,10 +1,66 @@
 #!/usr/bin/env python
 # coding: utf8
-
 import unittest
+import tempfile
+import app
+import io
+import os
+import contextlib
+import shutil
 from parsers.dp_module_parser import DPModuleParser
 from parsers.rack_module_parser import RackModuleParser
-from models import DPModule, RackModule
+from models import DPModule, RackModule, Module, Serializer
+
+
+class ModelsTestCase(unittest.TestCase):
+
+    def test_objects_equality(self):
+        initial_data = {
+            'DPModule': {
+                'order_num': '6ES7 322-1BF01-0AA0',
+                'position_name': 'POS1',
+                'slot_num': '1',
+                'dp_address': '2',
+                'dp_subsystem': '3',
+                'channels': {
+                        0: {'ch_type': 'O', 'ch_number': '0', 'ch_position_name': 'pos0', 'ch_description': 'test'},
+                        1: {'ch_type': 'O', 'ch_number': '1', 'ch_position_name': 'pos1', 'ch_description': 'test'},
+                        2: {'ch_type': 'O', 'ch_number': '2', 'ch_position_name': 'pos2', 'ch_description': 'test'},
+                        3: {'ch_type': 'O', 'ch_number': '3', 'ch_position_name': 'pos3', 'ch_description': 'test'}
+                    }
+            },
+
+            'RackModule': {
+                'order_num': '6ES7 417-4HT14-0AB0',
+                'position_name': 'CPU0',
+                'slot_num': '3',
+                'rack_num': '0',
+                'subslot_num': '1',
+                'firmware_version': 'V4.5'
+            }
+
+        }
+
+        for cls in [DPModule, RackModule]:
+            d = initial_data.get(cls.__name__)
+            obj1 = cls(**d)
+
+            self.assertNotEqual(obj1, {})
+
+            for attr in obj1.__dict__:
+                obj2 = cls(**d)
+                p = getattr(obj2, attr)
+
+                setattr(obj2, attr, None)
+                self.assertNotEqual(obj1, obj2)
+
+                setattr(obj2, attr, p)
+                self.assertEqual(obj1, obj2)
+
+    def test_serializer_class_instantiating(self):
+        s = Serializer(None)
+        with self.assertRaises(NotImplementedError) as context:
+            s.to_serial({}, '')
 
 
 class ParserTestCase(unittest.TestCase):
@@ -17,6 +73,16 @@ class ParserTestCase(unittest.TestCase):
         key, modules = result.popitem()
         self.assertTrue(len(modules) == 1)
         self.assertEqual(modules[0], obj_to_compare)
+
+        try:
+            if obj_to_compare.channels:
+                obj_to_compare.channels = {}
+            else:
+                obj_to_compare.channels = {0: {'ch_type': 'I', 'ch_number': '0', 'ch_position_name': 'test',
+                                               'ch_description': 'test'}}
+            self.assertNotEqual(modules[0], obj_to_compare)
+        except AttributeError:
+            pass
 
 
 class DPModuleParserTestCase(ParserTestCase):
@@ -752,6 +818,51 @@ END
             'firmware_version': 'V2.0'
         })
         self.do_test(str_to_parse, obj_to_compare)
+
+
+class FunctionalTests(unittest.TestCase):
+    """
+    High level app testing
+    """
+    def __check_args_exception(self, args, check_text = ''):
+        f = io.StringIO()
+        with contextlib.redirect_stderr(f):
+            with self.assertRaises(SystemExit) as cm:
+                app.main(args)
+            self.assertEqual(cm.exception.code, 2)
+        self.assertTrue(check_text in f.getvalue())
+
+    def __check_output_file(self, args):
+        output_file = tempfile.NamedTemporaryFile()
+        self.assertTrue(os.stat(output_file.name).st_size == 0)
+        app.main(args + ['-o', output_file.name])
+        self.assertTrue(os.stat(output_file.name).st_size > 0)
+
+    def test_cli_args(self):
+        self.__check_args_exception([], 'the following arguments are required: --if/-i, --of/-o')
+        self.__check_args_exception(['-f', 'test_format'], "invalid choice: 'test_format'")
+        self.__check_args_exception(['-i', 'test'], "The file test does not exist")
+
+        src_file_name = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'examples', 'test.cfg')
+
+        self.__check_output_file(['-i', src_file_name])
+        self.__check_output_file(['-f', 'json', '-i', src_file_name])
+        self.__check_output_file(['-f', 'json', '--json-pretty', '-i', src_file_name])
+
+        self.__check_output_file(['-f', 'xml', '-i', src_file_name])
+        self.__check_output_file(['-f', 'xml', '--xml-pretty', '--xml-attr-type', '-i', src_file_name])
+
+        self.__check_output_file(['-f', 'pdf', '-i', src_file_name])
+        self.__check_output_file(['-f', 'pdf',
+                                  '--pdf-x-offset', '5',
+                                  '--pdf-y-offset', '5',
+                                  '--pdf-zoom', '1.1',
+                                  '--pdf-rows-margin', '5',
+                                  '--pdf-cols-margin', '5',
+                                  '--pdf-strip-names',
+                                  '--pdf-page-size', 'a5',
+                                  '--pdf-page-orientation', 'l',
+                                  '-i', src_file_name])
 
 
 if __name__ == '__main__':

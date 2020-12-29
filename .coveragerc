@@ -1,0 +1,7 @@
+[run]
+source=pcs7_hw_parser
+omit = pcs7_hw_parser/tests.py
+
+[report]
+exclude_lines =
+    pragma: no cover

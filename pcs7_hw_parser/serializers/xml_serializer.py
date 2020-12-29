@@ -33,3 +33,4 @@ class XMLSerializer(Serializer):
             result = dicttoxml.dicttoxml(temp, attr_type=args.xml_attr_type)
 
         args.output_file.write(result)
+        args.output_file.close()
