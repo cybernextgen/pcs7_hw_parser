@@ -1,4 +1,4 @@
-# SIMATIC PCS7/STEP7 hardware configuration parser [![Build Status](https://travis-ci.com/cybernextgen/pcs7_hw_parser.svg?branch=master)](https://travis-ci.com/cybernextgen/pcs7_hw_parser)
+# SIMATIC PCS7/STEP7 hardware configuration parser [![Build Status](https://travis-ci.com/cybernextgen/pcs7_hw_parser.svg?branch=master)](https://travis-ci.com/cybernextgen/pcs7_hw_parser) [![codecov](https://codecov.io/gh/cybernextgen/pcs7_hw_parser/branch/master/graph/badge.svg?token=2R5PB6Z6KG)](https://codecov.io/gh/cybernextgen/pcs7_hw_parser)
 
 ## Features
 This parser allows you to export hardware configuration of your PCS7/STEP7 AS station to pretty json, or xml or custom format using 
