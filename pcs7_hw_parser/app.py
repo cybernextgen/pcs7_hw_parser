@@ -73,8 +73,13 @@ def main(argv):
             thread.start()
 
         for thread in threads:
-            while thread.isAlive():
-                thread.join(5)
+            try:
+                while thread.isAlive():
+                    thread.join(5)
+            except AttributeError:
+                # so, using python 3.9 name
+                while thread.is_alive():
+                    thread.join(5)
 
         serializer = serializers_pool.get(args.output_format)
         serializer.to_serial(args, result)
