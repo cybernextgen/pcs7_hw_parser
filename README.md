@@ -13,10 +13,40 @@ svg file that contains label template.
 
 ## Installation
 
+Required python version >= 3.6
+
 ```sh
 $ git clone https://github.com/cybernextgen/pcs7_hw_parser.git
 $ cd pcs7_hw_parser
 $ pip install -r pcs7_hw_parser/requirements.txt
+```
+
+## Configuration
+
+Use `settings.py` module for overriding or extending default configuration
+
+```py
+# choose any supported by python runtime encoding
+DEFAULT_INPUT_FILE_ENCODING = 'cp1251'
+
+# tuple of parsers classes, you can specify custom parser here
+PARSERS_AVAILABLE = (...)
+
+# tuple of serializer classes, you can specify custom serializer here
+SERIALIZERS_AVAILABLE = (...)
+
+# verbose names for order numbers. Parsers fills 'module_type' field of model with values from that dict. Keys might be regex
+MODULE_TYPES = { 'regex': 'module_type_verbose name'}
+
+# settings for PDF serializer
+# path to folder with .svg labels templates
+LABELS_TEMPLATE_DIR = ...
+
+# mapping between module_type and .svg label template
+LABELS_TEMPLATE_MAP = {'module_type_verbose name': file.svg}
+
+# chars from that tuple will be removed during labels rendering, when you select --pdf-strip-names option
+LABELS_REMOVED_CHARS = ()
 ```
 
 ## Usage

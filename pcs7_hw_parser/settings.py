@@ -2,23 +2,23 @@ import os
 """
 App settings
 """
-
+# choose any supported by python runtime encoding
 DEFAULT_INPUT_FILE_ENCODING = 'cp1251'
 
+# tuple of parsers classes, you can specify custom parser here
 PARSERS_AVAILABLE = (
     'dp_module_parser.DPModuleParser',
     'rack_module_parser.RackModuleParser'
 )
 
-# First serializer are default
+# tuple of serializer classes, you can specify custom serializer here
 SERIALIZERS_AVAILABLE = (
     'json_serializer.JSONSerializer',
     'xml_serializer.XMLSerializer',
     'pdf_serializer.PDFSerializer'
 )
 
-# Dict for filling module type field, should be:
-# 'regex': 'module type verbose name'
+# verbose names for order numbers. Parsers fills 'module_type' field of model with values from that dict. Keys might be regex
 MODULE_TYPES = {
     '6ES7 153-1\s*': 'IM153-1',
     '6ES7 153-2\s*': 'IM153-2',
@@ -57,9 +57,11 @@ MODULE_TYPES = {
     'TELE0956.GSD': 'TELEMECANIQUE - ATV71/61'
 }
 
-# Settings for PDF serializer
+# settings for PDF serializer
+# path to folder with .svg labels templates
 LABELS_TEMPLATE_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'templates')
 
+# mapping between module_type and .svg label template
 LABELS_TEMPLATE_MAP = {
     'SM331 AI 8': '8_CH.svg',
     'SM322 DO 8x24v': '8_CH.svg',
