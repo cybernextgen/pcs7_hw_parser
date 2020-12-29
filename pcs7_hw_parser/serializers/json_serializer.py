@@ -24,3 +24,4 @@ class JSONSerializer(Serializer):
             result = json.dumps(temp, ensure_ascii=False)
 
         args.output_file.write(result.encode())
+        args.output_file.close()

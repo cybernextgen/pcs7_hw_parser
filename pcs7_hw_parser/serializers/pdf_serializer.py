@@ -134,6 +134,7 @@ class PDFSerializer(Serializer):
                         current_y = current_y + row_height + args.pdf_rows_margin
 
                 pdf.image(res.name, current_x, current_y, label_width, label_height, type="png")
+                res.close()
 
                 current_x = current_x + label_width + args.pdf_cols_margin
 
@@ -141,3 +142,4 @@ class PDFSerializer(Serializer):
                 pass
 
         pdf.output(args.output_file.name, "F")
+        args.output_file.close()
